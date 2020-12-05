@@ -70,7 +70,7 @@ for price in prices:
 ```
 ![1](https://github.com/brdx88/Shopee-Payment-Matching/blob/main/images/3.png)
 
-## 3) Transactions which not Matched (yet)
+## 3) Transactions which not Match (yet)
 Using Fuzzy Wuzzy (Fuzzy Search), we could find the same item easily and codelessly.
 
 ![1](https://github.com/brdx88/Shopee-Payment-Matching/blob/main/images/4.png)
