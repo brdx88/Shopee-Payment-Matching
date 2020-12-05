@@ -11,13 +11,17 @@ A proper match occurs when both the amount and the name matches on both bank sta
 
 ## About The Dataset
 The dataset was separated into two csv files: bank statement and checkout description.
+
 Bank Statement Dataset
+
 ![1](https://github.com/brdx88/Shopee-Payment-Matching/blob/main/images/1.png)
 
 Checkout Statement Dataset
+
 ![1](https://github.com/brdx88/Shopee-Payment-Matching/blob/main/images/2.png)
 
 ## 1) Removing Unwanted Characters first
+There are a lot of symbols and unwanted words. We should clean it first using regex.
 
 ```python
 bank['desc']        = bank['desc'].apply(lambda x: re.sub(r"[^a-zA-Z0-9]+", ' ', x))
@@ -27,7 +31,9 @@ check['buyer_name'] = check['buyer_name'].apply(lambda x: re.sub(r"TRANSFER", ' 
 ```
 
 ## 2) Match the Price (amount) and the Buyer Name
-![1](https://github.com/brdx88/Shopee-Payment-Matching/blob/main/images/3.png)
+We are trying to match the amount of price and the buyer name like the task in the early description above.
+And of course, it seems like there are some not-proportion name between Buyer Name and the Description.
+For any transaction cannot find a fitting bank statement, it will be stored to be processed later using Fuzzy Wuzzy.
 
 ```python
 prices = sorted(list(set(check['ckt_amount'])))
@@ -60,10 +66,13 @@ for price in prices:
     curr_bank, curr_trans = [], []
 
 ```
+![1](https://github.com/brdx88/Shopee-Payment-Matching/blob/main/images/3.png)
 
 ## 3) Transactions which not Matched (yet)
+Using Fuzzy Wuzzy (Fuzzy Search), we could find the same item easily and codelessly.
+
 ![1](https://github.com/brdx88/Shopee-Payment-Matching/blob/main/images/4.png)
-![1](https://github.com/brdx88/Shopee-Payment-Matching/blob/main/images/5.png)
+
 
 ```python
 prices_new = sorted(list(set(check_new['ckt_amount'])))
@@ -85,7 +94,17 @@ for price in prices_new:
     curr_bank2, curr_trans2 = [], []
 
 ```
+![1](https://github.com/brdx88/Shopee-Payment-Matching/blob/main/images/5.png)
 
 ## 4) Merge Those Two Transactions and Show `The Bank Statement ID and Checkout Statement ID`
-At the end
+After all, we merge the transaction and display the IDs only for requirements.
+
 ![1](https://github.com/brdx88/Shopee-Payment-Matching/blob/main/images/6.png)
+
+## Export to CSV files
+Then, export the dataframe into csv for submission in Kaggle.
+```python
+fs.to_csv('submission.csv', index=False)
+```
+
+Special thanks to [cupu123](https://www.kaggle.com/matheusaaron/payment-matching-by-cupu123) who guides us all into the outside of the tunnel.
