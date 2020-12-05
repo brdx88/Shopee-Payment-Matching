@@ -104,7 +104,7 @@ After all, we merge the transaction and display the IDs only for requirements.
 ![1](https://github.com/brdx88/Shopee-Payment-Matching/blob/main/images/6.png)
 
 ## Export to CSV files
-Then, export the dataframe into csv for submission in Kaggle.
+Then, export the dataframe into csv for submission on Kaggle.
 ```python
 fs.to_csv('submission.csv', index=False)
 ```
